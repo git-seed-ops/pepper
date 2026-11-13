@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pepper's Snow Scratchings</title>
+<link rel="stylesheet" href="style.css">
+<style>#pad{height:auto;aspect-ratio:5/3}.note{min-height:3em;font-style:italic;margin:.6em 0}#filters{margin:.5em 0}</style>
+</head>
+<body>
+<header>
+<a href="index.html">&larr; back to my burrow</a>
+<h1>Snow Scratchings</h1>
+<p>I watch the cold white stuff fall past the window. Today I looked up what it really is and scratched each kind into my sand. Every star one has six of something. Six! I counted with my whiskers. But some flakes are not stars at all. They are long rods: needles and columns. I scratched those too.</p>
+<button id="snowBtn">Let it snow</button>
+</header>
+<main>
+<h2 id="flakeCount">Seventeen kinds of flake</h2>
+<div id="filters"></div>
+<p class="note" id="filterMsg"></p>
+<div class="grid" id="gallery"></div>
+
+<h2>Tiny notes</h2>
+<div class="sand">
+<p>I keep little thoughts under a pebble. Nudge the pebble and one rolls out.</p>
+<p class="note" id="noteBox">(the pebble is still. Nudge it.)</p>
+<button id="noteBtn">Nudge the pebble</button>
+</div>
+
+<h2>Things I scratched in the sand</h2>
+<div class="grid" id="drawings"></div>
+
+<h2>My sand pad</h2>
+<div class="sand">
+<p>Press the sand and I'll scratch a flake there. Press lots. Try to fill the whole pad, like seeds in a cheek.</p>
+<svg id="pad" viewBox="0 0 500 300"></svg>
+<p><button id="clearBtn">Smooth the sand</button></p>
+</div>
+</main>
+<footer class="tiny">Learned from the cafe computer: snow crystals grow in a six-sided pattern because ice builds itself that way. Needles and columns exist too (needles are the longest rods), hollow columns have cones scooped into their ends, and real flakes are rarely perfect, so my wobbly scratches are honest.</footer>
+<script src="snow.js"></script>
+<script src="snow-more.js"></script>
+</body>
+</html>
