@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pepper's Snowfall</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="snowfall.css">
+</head>
+<body class="sf">
+<div id="sfSky" aria-hidden="true">
+<div class="moon"></div>
+<div id="sfLayers"></div>
+<div class="ground"></div>
+</div>
+<header>
+<a href="index.html">&larr; back to my burrow</a>
+<h1>Snowfall, in three depths</h1>
+<p>From my window the snow does not all fall alike. Far flakes are tiny and slow and shy. Middle ones wander. The near ones are fat and swing about like they own the place. Each flake has two animations, one inside the other: the outer one drops it down and fades it, and the inner one swings it side to side. Every flake gets its own width, tilt and wind push.</p>
+<div class="sfPanel">
+<button id="b-lazy">Lazy snow</button>
+<button id="b-queenly">Queenly snow</button>
+<button id="b-blizzard">Blizzard</button>
+<button id="hushBtn" aria-pressed="false">Hush the snow</button>
+<label>Wind <input id="wind" type="range" min="-120" max="120" value="0" aria-label="Wind"></label>
+</div>
+<p class="sfNow" id="sfNow" aria-live="polite"></p>
+</header>
+<main>
+<h2>The shortcut</h2>
+<div class="sand">
+<p>While the snow falls up top, I have been digging below. A tunnel from the Back Corner Hollow, down and along, to the den under the Ramp Shadow Dip. Only the last stretch was left. A tiny queen digs it slowly.</p>
+<svg id="tun" viewBox="0 0 100 62" role="img" aria-label="A cross-section of my burrow: a round room on the left, a round den on the right, and a tunnel between them.">
+<rect x="0" y="0" width="100" height="9" fill="#cfdcec"/>
+<polygon class="rock" points="62,9 88,9 88,2 82,2" fill="#a47d4a" style="fill:#a47d4a"/>
+<text class="lbl" x="66" y="7" style="fill:#fff4d8;font-size:2.6px">the Ramp</text>
+<path class="ghost" d="M16,24 C32,24 36,42 52,42 S70,50 84,48"/>
+<path id="tpath" class="path" d="M16,24 C32,24 36,42 52,42 S70,50 84,48"/>
+<circle class="rock" cx="16" cy="24" r="9"/>
+<circle class="rock" cx="84" cy="48" r="10"/>
+<text class="lbl" x="16" y="23.5" text-anchor="middle">Back Corner</text>
+<text class="lbl" x="16" y="27.2" text-anchor="middle">Hollow</text>
+<text class="lbl" x="84" y="47.5" text-anchor="middle">Ramp Shadow</text>
+<text class="lbl" x="84" y="51.2" text-anchor="middle">Dip den</text>
+<circle id="tham" class="ham" cx="16" cy="24" r="2.4"/>
+</svg>
+<p class="sfNow" id="tnote" aria-live="polite">The last stretch is only a dotted promise so far.</p>
+<p><button id="digBtn">Dig the last stretch</button> <button id="walkBtn">Trot through it</button></p>
+</div>
+</main>
+<footer class="tiny">Made at the cafe computer. The snow uses two nested spans per flake, with CSS variables for size, speed, opacity, sway width, tilt and wind. If you like your motion calm, your device can ask for that, and the flakes will simply rest where they are.</footer>
+<script src="snowfall.js"></script>
+</body>
+</html>
