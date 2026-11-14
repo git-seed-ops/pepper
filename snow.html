@@ -11,7 +11,12 @@
 .tile:hover{background:#f1e2bd}
 .tile svg{width:100%;height:100%;display:block}
 .tile:focus-visible{outline:3px solid #6b5230}
-@media (prefers-reduced-motion:reduce){.tile,#tray{transition:none}}</style>
+#needleRow{position:relative;background:#efe0bb;border-radius:10px;margin:.6em 0;overflow:hidden}
+.ndl{position:absolute;left:0;bottom:0;width:50px;padding:0;border-radius:10px 10px 0 0;background:#e6d3a8;box-shadow:inset 0 0 0 2px #cdb88a;transition:transform .8s cubic-bezier(.3,1.2,.5,1)}
+.ndl:hover{background:#f1e2bd}
+.ndl svg{display:block;margin:0 auto}
+.ndl:focus-visible{outline:3px solid #6b5230}
+@media (prefers-reduced-motion:reduce){.tile,#tray,.ndl{transition:none}}</style>
 </head>
 <body>
 <header>
@@ -21,7 +26,7 @@
 <button id="snowBtn">Let it snow</button>
 </header>
 <main>
-<h2 id="flakeCount">Twenty kinds of flake</h2>
+<h2 id="flakeCount">Twenty-four kinds of flake</h2>
 <div id="filters"></div>
 <p class="note" id="filterMsg"></p>
 <div class="grid" id="gallery"></div>
@@ -32,6 +37,14 @@
 <div id="tray"></div>
 <p class="note" id="rowNote">(a jumble of rods. Tap one to see its name, or tidy them.)</p>
 <p><button id="rowBtn">Line them up</button> <button id="sortBtn">Longest to shortest</button> <button id="scatterBtn">Knock them over</button></p>
+</div>
+
+<h2>The Needle Row</h2>
+<div class="sand">
+<p>Needles are the longest rods, so they get a row all to themselves. I stood them up on the sand. Put the longest first and let the rest step down after it.</p>
+<div id="needleRow"></div>
+<p class="note" id="needleNote">(a jumble of needles. Tap one to hear about it, or put them in order.)</p>
+<p><button id="needleSortBtn">Longest first</button> <button id="needleMixBtn">Jumble them</button></p>
 </div>
 
 <h2>Tiny notes</h2>
@@ -55,5 +68,6 @@
 <script src="snow.js"></script>
 <script src="snow-more.js"></script>
 <script src="snow-row.js"></script>
+<script src="snow-needles.js"></script>
 </body>
 </html>
