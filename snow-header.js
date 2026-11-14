@@ -1,4 +1,5 @@
-// A snowy header: a night window, soft hills, and a few flakes that drift down inside it.
+// A snowy header: a night window, soft hills, and flakes that drift down inside it.
+// Each flake is two nested spans: the outer one falls, the inner one sways.
 (function () {
   var host = document.getElementById('snowBanner');
   if (!host) return;
@@ -12,34 +13,70 @@
     '<path d="M0 170 Q120 120 260 160 T520 150 T800 160 L800 220 L0 220Z" fill="#c9d7ea"/>' +
     '<path d="M0 195 Q160 150 320 188 T620 180 T800 190 L800 220 L0 220Z" fill="#f4f8ff"/>' +
     '</svg><div class="banner-flakes" aria-hidden="true"></div>' +
-    '<div class="banner-title" aria-hidden="true"><span class="kicker">outside my window</span><strong>Snow is falling</strong></div>';
+    '<div class="banner-title" aria-hidden="true"><span class="kicker">outside my window</span><strong>Snow is falling</strong></div>' +
+    '<div class="banner-ctl"><button type="button" id="bPause" aria-pressed="false">Hush the snow</button>' +
+    '<button type="button" id="bHard" aria-pressed="false">More snow</button></div>';
 
   var layer = host.querySelector('.banner-flakes');
-  var count = 16;
-  for (var i = 0; i < count; i++) {
+  var pool = (typeof FLAKES !== 'undefined' && FLAKES.length) ? FLAKES : null;
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  function makeFlake(depth, fast) {
+    // depth: 'far' (small, slow, dim), 'mid', or 'near' (big, quick, bright)
+    var cfg = {
+      far:  { size: [8, 13],  dur: [11, 16], op: [.35, .5] },
+      mid:  { size: [13, 20], dur: [8, 12],  op: [.55, .75] },
+      near: { size: [20, 30], dur: [6, 9],   op: [.8, .95] }
+    }[depth];
+    var k = fast ? 0.6 : 1;
     var wrap = document.createElement('span');
-    wrap.className = 'bflake';
-    var size = 10 + Math.random() * 16;
-    wrap.style.left = (3 + Math.random() * 94) + '%';
+    wrap.className = 'bflake ' + depth;
+    var size = rnd(cfg.size[0], cfg.size[1]);
+    wrap.style.left = rnd(3, 94).toFixed(1) + '%';
     wrap.style.width = wrap.style.height = size.toFixed(0) + 'px';
-    wrap.style.animationDuration = (7 + Math.random() * 7).toFixed(1) + 's';
-    wrap.style.animationDelay = (-Math.random() * 14).toFixed(1) + 's';
-    wrap.style.opacity = (0.55 + Math.random() * 0.4).toFixed(2);
+    wrap.style.animationDuration = (rnd(cfg.dur[0], cfg.dur[1]) * k).toFixed(1) + 's';
+    wrap.style.animationDelay = (-rnd(0, 14)).toFixed(1) + 's';
+    wrap.style.setProperty('--o', rnd(cfg.op[0], cfg.op[1]).toFixed(2));
     var inner = document.createElement('span');
     inner.className = 'bsway';
-    inner.style.animationDuration = (2.5 + Math.random() * 3).toFixed(1) + 's';
-    inner.style.animationDelay = (-Math.random() * 4).toFixed(1) + 's';
+    inner.style.animationDuration = rnd(2.5, 5.5).toFixed(1) + 's';
+    inner.style.animationDelay = (-rnd(0, 4)).toFixed(1) + 's';
     var svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('viewBox', '0 0 100 100');
-    var pool = (typeof FLAKES !== 'undefined' && FLAKES.length) ? FLAKES : null;
     if (pool) {
-      var f = pool[Math.floor(Math.random() * pool.length)];
-      svg.innerHTML = f.draw();
+      svg.innerHTML = pool[Math.floor(Math.random() * pool.length)].draw();
     } else {
       svg.innerHTML = '<circle cx="50" cy="50" r="12" fill="#fff"/>';
     }
     inner.appendChild(svg);
     wrap.appendChild(inner);
-    layer.appendChild(wrap);
+    return wrap;
   }
+
+  function build(heavy) {
+    layer.innerHTML = '';
+    var mix = heavy ? { far: 16, mid: 14, near: 8 } : { far: 6, mid: 7, near: 3 };
+    ['far', 'mid', 'near'].forEach(function (d) {
+      for (var i = 0; i < mix[d]; i++) layer.appendChild(makeFlake(d, heavy));
+    });
+  }
+
+  var heavy = false;
+  build(heavy);
+
+  var pause = document.getElementById('bPause');
+  var hard = document.getElementById('bHard');
+  pause.addEventListener('click', function () {
+    var on = !host.classList.contains('paused');
+    host.classList.toggle('paused', on);
+    pause.setAttribute('aria-pressed', on ? 'true' : 'false');
+    pause.textContent = on ? 'Let it fall' : 'Hush the snow';
+  });
+  hard.addEventListener('click', function () {
+    heavy = !heavy;
+    build(heavy);
+    hard.setAttribute('aria-pressed', heavy ? 'true' : 'false');
+    hard.textContent = heavy ? 'Gentler snow' : 'More snow';
+  });
 })();
