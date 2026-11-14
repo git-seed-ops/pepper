@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pepper's Slump Tray</title>
+<link rel="stylesheet" href="style.css">
+<style>
+#slumpCanvas{display:block;width:100%;height:auto;aspect-ratio:600/320;border-radius:10px;cursor:pointer;touch-action:manipulation;background:#1f2a3d}
+#slumpCanvas:focus-visible{outline:3px solid #6b5230;outline-offset:3px}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:.7em 0}
+.slip{margin:.7em 0}
+.slip input{width:100%;accent-color:#6b5230}
+.slip label{font-weight:bold}
+#slumpMsg{min-height:3em;font-style:italic;margin:.5em 0}
+#slipWord{margin:.2em 0;font-style:italic}
+.auto{display:flex;gap:6px;align-items:center}
+pre{background:#efe0bb;border-radius:10px;padding:10px;overflow:auto;font-size:.85rem;color:#4a3a22}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html">&larr; back to my burrow</a> &middot; <a href="snow.html">Snow Scratchings</a>
+<h1>The Slump Tray</h1>
+<p>I am feeling like a very lazy queen today, so I did not want to push snow around myself. I wanted the snow to push itself. Here is a row of snow heights. Where one column stands too tall next to its neighbour, a grain slides sideways. Then the neighbour might be too tall, and it slides on. Soon the whole pile is a soft hill.</p>
+</header>
+<main>
+<div class="sand">
+<canvas id="slumpCanvas" width="600" height="320" tabindex="0" role="img" aria-label="A row of snow columns. Press it to drop snow. Left and right arrow keys move the marker, Enter drops snow."></canvas>
+<p id="slumpMsg" role="status"></p>
+<div class="slip">
+<label for="slipSlider">How sticky is the snow?</label>
+<input type="range" id="slipSlider" min="1" max="4" step="1" value="2">
+<p id="slipWord"></p>
+</div>
+<div class="ctl">
+<button type="button" id="heapBtn">Tip a shovelful</button>
+<button type="button" id="stepBtn">Slump one step</button>
+<button type="button" id="viewBtn">Show it soft</button>
+<button type="button" id="flatBtn">Sweep it flat</button>
+</div>
+<label class="auto"><input type="checkbox" id="autoBox" checked> let it slump by itself (untick it and use "Slump one step" to go slowly)</label>
+<p class="tiny">Tap the tray to drop a pinch of snow. A warm cream grain just slid. On a keyboard, use the arrow keys and Enter.</p>
+</div>
+
+<h2>How the pile thinks</h2>
+<div class="sand">
+<p>It is only a row of numbers. Hm, a row of heights. (I do not do numbers. The cafe computer does them for me.) Every step, the pile looks at each column and its two neighbours:</p>
+<pre>for each column i, in a random order:
+  for each neighbour j beside it:
+    if column i is taller than j
+       by more than the stickiness:
+      move one grain from i to j</pre>
+<p>Slippery snow lets only a tiny difference stand, so it spreads out flat and wide. Sticky wet snow can lean into a much steeper heap before it gives. Real snow does the same: it settles at a steepest slope it can hold, and when you pile on more, it avalanches in little slumps. The soft drift at the bottom of my Snow page runs on the same trick.</p>
+<p>The order is random on purpose. If everything slid left to right, the pile would lean one way, like me after seeds.</p>
+</div>
+</main>
+<footer class="tiny">Learned from the cafe computer: a pile of loose grains rests at a steepest slope. Add more at the top and the extra tumbles down the sides, which is how a pile keeps its mound shape.</footer>
+<script src="drift-lab.js"></script>
+</body>
+</html>
