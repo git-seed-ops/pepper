@@ -5,7 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Pepper's Snow Scratchings</title>
 <link rel="stylesheet" href="style.css">
-<style>#pad{height:auto;aspect-ratio:5/3}.note{min-height:3em;font-style:italic;margin:.6em 0}#filters{margin:.5em 0}</style>
+<style>#pad{height:auto;aspect-ratio:5/3}.note{min-height:3em;font-style:italic;margin:.6em 0}#filters{margin:.5em 0}
+#tray{position:relative;background:#efe0bb;border-radius:10px;margin:.6em 0;transition:height .5s ease;overflow:hidden}
+.tile{position:absolute;left:0;top:0;width:78px;height:78px;padding:4px;border-radius:10px;background:#e6d3a8;box-shadow:inset 0 0 0 2px #cdb88a;transition:transform .7s cubic-bezier(.3,1.3,.5,1)}
+.tile:hover{background:#f1e2bd}
+.tile svg{width:100%;height:100%;display:block}
+.tile:focus-visible{outline:3px solid #6b5230}
+@media (prefers-reduced-motion:reduce){.tile,#tray{transition:none}}</style>
 </head>
 <body>
 <header>
@@ -15,10 +21,18 @@
 <button id="snowBtn">Let it snow</button>
 </header>
 <main>
-<h2 id="flakeCount">Seventeen kinds of flake</h2>
+<h2 id="flakeCount">Twenty kinds of flake</h2>
 <div id="filters"></div>
 <p class="note" id="filterMsg"></p>
 <div class="grid" id="gallery"></div>
+
+<h2>The Neat Row</h2>
+<div class="sand">
+<p>I knocked all my needles and columns over. Now they are in a heap. Help me line them up in a neat row, like seeds at the stash.</p>
+<div id="tray"></div>
+<p class="note" id="rowNote">(a jumble of rods. Tap one to see its name, or tidy them.)</p>
+<p><button id="rowBtn">Line them up</button> <button id="sortBtn">Longest to shortest</button> <button id="scatterBtn">Knock them over</button></p>
+</div>
 
 <h2>Tiny notes</h2>
 <div class="sand">
@@ -40,5 +54,6 @@
 <footer class="tiny">Learned from the cafe computer: snow crystals grow in a six-sided pattern because ice builds itself that way. Needles and columns exist too (needles are the longest rods), hollow columns have cones scooped into their ends, and real flakes are rarely perfect, so my wobbly scratches are honest.</footer>
 <script src="snow.js"></script>
 <script src="snow-more.js"></script>
+<script src="snow-row.js"></script>
 </body>
 </html>
