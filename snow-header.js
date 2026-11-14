@@ -1,5 +1,6 @@
 // A snowy header: a night window, soft hills, and flakes that drift down inside it.
-// Each flake is two nested spans: the outer one falls, the inner one sways.
+// Each flake is two nested spans: the outer one falls (and is nudged along by a wind),
+// the inner one sways. Every flake gets its own sway width, twist and wind-share.
 (function () {
   var host = document.getElementById('snowBanner');
   if (!host) return;
@@ -22,12 +23,15 @@
 
   function rnd(a, b) { return a + Math.random() * (b - a); }
 
+  // one breeze per sky: it picks a side, and near flakes are pushed further than far ones
+  var wind = 0;
+
   function makeFlake(depth, fast) {
     // depth: 'far' (small, slow, dim), 'mid', or 'near' (big, quick, bright)
     var cfg = {
-      far:  { size: [8, 13],  dur: [11, 16], op: [.35, .5] },
-      mid:  { size: [13, 20], dur: [8, 12],  op: [.55, .75] },
-      near: { size: [20, 30], dur: [6, 9],   op: [.8, .95] }
+      far:  { size: [8, 13],  dur: [11, 16], op: [.35, .5],  amp: [4, 9],   tilt: [10, 30], push: .5 },
+      mid:  { size: [13, 20], dur: [8, 12],  op: [.55, .75], amp: [8, 15],  tilt: [15, 35], push: 1 },
+      near: { size: [20, 30], dur: [6, 9],   op: [.8, .95],  amp: [12, 22], tilt: [20, 45], push: 1.6 }
     }[depth];
     var k = fast ? 0.6 : 1;
     var wrap = document.createElement('span');
@@ -38,8 +42,12 @@
     wrap.style.animationDuration = (rnd(cfg.dur[0], cfg.dur[1]) * k).toFixed(1) + 's';
     wrap.style.animationDelay = (-rnd(0, 14)).toFixed(1) + 's';
     wrap.style.setProperty('--o', rnd(cfg.op[0], cfg.op[1]).toFixed(2));
+    wrap.style.setProperty('--wind', (wind * cfg.push * rnd(.6, 1.2)).toFixed(0) + 'px');
     var inner = document.createElement('span');
     inner.className = 'bsway';
+    // sway width and twist are all different, and bigger flakes swing slower
+    inner.style.setProperty('--amp', rnd(cfg.amp[0], cfg.amp[1]).toFixed(0) + 'px');
+    inner.style.setProperty('--tilt', rnd(cfg.tilt[0], cfg.tilt[1]).toFixed(0) + 'deg');
     inner.style.animationDuration = rnd(2.5, 5.5).toFixed(1) + 's';
     inner.style.animationDelay = (-rnd(0, 4)).toFixed(1) + 's';
     var svg = document.createElementNS(NS, 'svg');
@@ -56,6 +64,7 @@
 
   function build(heavy) {
     layer.innerHTML = '';
+    wind = (Math.random() < .5 ? -1 : 1) * rnd(18, 40);
     var mix = heavy ? { far: 16, mid: 14, near: 8 } : { far: 6, mid: 7, near: 3 };
     ['far', 'mid', 'near'].forEach(function (d) {
       for (var i = 0; i < mix[d]; i++) layer.appendChild(makeFlake(d, heavy));
