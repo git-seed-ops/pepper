@@ -1,16 +1,26 @@
 #snowBanner{position:relative;max-width:820px;margin:12px auto 0;height:190px;border-radius:16px;overflow:hidden;box-shadow:0 0 0 3px #cdb88a}
 .banner-art{position:absolute;inset:0;width:100%;height:100%;display:block}
 .banner-flakes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-/* outer animation: the fall. It also fades each flake in at the top and out at the bottom. */
+/* outer animation: the fall, plus a slow wind-drift sideways (--wind). It also fades each flake in at the top and out at the bottom. */
 .bflake{position:absolute;top:-30px;display:block;opacity:var(--o,.8);animation:bfall linear infinite}
-/* inner animation: the sway, back and forth while the outer one falls */
+/* inner animation: the sway, back and forth (--amp wide, --tilt twisty) with a little floaty bob in the middle */
 .bsway{display:block;width:100%;height:100%;animation:bsway ease-in-out infinite alternate}
 .bflake svg{width:100%;height:100%;display:block;overflow:visible}
 .bflake svg .s{stroke:#fff;stroke-width:4}
 .bflake.far svg{filter:none}
 .bflake.near svg{filter:blur(.8px)}
-@keyframes bfall{0%{transform:translateY(0);opacity:0}12%{opacity:var(--o,.8)}85%{opacity:var(--o,.8)}100%{transform:translateY(240px);opacity:0}}
-@keyframes bsway{from{transform:translateX(-14px) rotate(-25deg)}to{transform:translateX(14px) rotate(25deg)}}
+@keyframes bfall{
+  0%{transform:translate(0,0);opacity:0}
+  12%{opacity:var(--o,.8)}
+  50%{transform:translate(calc(var(--wind,0px) * .25),120px)}
+  85%{opacity:var(--o,.8)}
+  100%{transform:translate(var(--wind,0px),240px);opacity:0}
+}
+@keyframes bsway{
+  from{transform:translate(calc(var(--amp,14px) * -1),-3px) rotate(calc(var(--tilt,25deg) * -1))}
+  50%{transform:translate(calc(var(--amp,14px) * .1),4px) rotate(0deg)}
+  to{transform:translate(var(--amp,14px),-3px) rotate(var(--tilt,25deg))}
+}
 .banner-title{position:absolute;left:0;right:0;top:46px;text-align:center;color:#fff;text-shadow:0 2px 8px #0b1224}
 .banner-title strong{display:block;font-size:2.3rem;line-height:1.1}
 .banner-title .kicker{display:block;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;color:#ffe9b8}
