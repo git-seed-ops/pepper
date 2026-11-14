@@ -1,0 +1,12 @@
+#snowDrift{max-width:none;margin:28px 0 0;padding:0;background:#1f2a3d;overflow:hidden}
+#snowDrift .drift-ctl{max-width:820px;margin:0 auto;padding:12px 18px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+#snowDrift .drift-msg{margin:0;color:#ffe9b8;font-style:italic;flex:1 1 220px}
+#snowDrift .drift-btns{display:flex;flex-wrap:wrap;gap:6px}
+#snowDrift button{font:inherit;font-size:.8rem;padding:5px 12px;border-radius:999px;border:0;background:rgba(244,248,255,.88);color:#243558;cursor:pointer;box-shadow:0 1px 4px rgba(11,18,36,.4)}
+#snowDrift button:hover{background:#fff}
+#snowDrift button:focus-visible{outline:3px solid #ffe9b8;outline-offset:2px}
+#driftCanvas{display:block;width:100%;height:170px;cursor:pointer;touch-action:manipulation}
+#driftCanvas:focus-visible{outline:3px solid #ffe9b8;outline-offset:-3px}
+#snowDrift .drift-hint{margin:0;padding:8px 18px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font-size:.85rem;color:#4a5b7e;background:#f4f8ff}
+@media (max-width:480px){#snowDrift .drift-ctl{justify-content:center;text-align:center}#snowDrift .drift-btns{justify-content:center}}
+@media (prefers-reduced-motion:reduce){#snowDrift button{transition:none}}
