@@ -1,0 +1,18 @@
+.heapcols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;margin:10px 0}
+@media(max-width:620px){.heapcols{grid-template-columns:1fr}}
+.heapcol{background:#f6ecd0;border:2px solid #d8c392;border-radius:12px;padding:10px}
+.heapcol h3{margin:0 0 6px}
+.heapcol figure{margin:0 0 8px}
+.heapcol figure svg{width:100%;height:auto;background:#efe0bb;border-radius:10px;display:block}
+.heapcol figcaption{font-size:.9rem;margin-top:.3em}
+.cols{width:100%;height:auto;display:block;background:#efe0bb;border-radius:10px;cursor:pointer;touch-action:manipulation}
+.cols .ground{stroke:#6b5230;stroke-width:1.4;stroke-linecap:round}
+.cols .g-sun{fill:#5a4630;stroke:#2f2314;stroke-width:.5}
+.cols .g-mil{fill:#e0a92c;stroke:#b17d14;stroke-width:.4}
+.cols .wob{fill:#c8643a;stroke:#7a2e12}
+.cols .tick{fill:#6b5230;font:5px "Trebuchet MS",sans-serif;text-anchor:middle}
+.cols .moving{fill:#7ba57a;stroke:#3d6b4a}
+.cols .halo{fill:none;stroke:#c8643a;stroke-width:.8;stroke-dasharray:2 2}
+.verdict{min-height:3em;font-style:italic;margin:.5em 0 0}
+.verdict.ok{color:#3d6b4a}
+.verdict.bad{color:#9a3d1a}
