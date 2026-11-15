@@ -9,6 +9,7 @@ var heaps={
 };
 var kinds=['sun','mil'];
 var timer=null;
+var focusAt=null; // {k,i}: keeps keyboard focus on a column when the diagram redraws
 function rnd(a,b){return a+Math.random()*(b-a)}
 function gauss(){return (Math.random()+Math.random()+Math.random()-1.5)/1.5}
 function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
@@ -41,10 +42,12 @@ function steep(p){
   }
   return worst;
 }
+// a column is wobbly when it stands taller than a neighbour by more than the limit
 function wobblies(p){
   var out={},c=0;
-  for(var i=0;i<N-1;i++){
-    if(Math.abs(p.h[i]-p.h[i+1])>p.limit){out[i]=1;out[i+1]=1}
+  for(var i=0;i<N;i++){
+    var l=i>0?p.h[i-1]:p.h[i], r=i<N-1?p.h[i+1]:p.h[i];
+    if(p.h[i]-l>p.limit||p.h[i]-r>p.limit)out[i]=1;
   }
   for(var k in out)c++;
   return {set:out,count:c};
@@ -62,7 +65,16 @@ function draw(p,kind){
       if(kind==='sun')s.appendChild(el('rect',{'class':cls,x:x+.6,y:y+.5,width:CW-1.2,height:CH-1,rx:2.4}));
       else s.appendChild(el('circle',{'class':cls,cx:x+CW/2,cy:y+CH/2,r:2.5}));
     }
-    s.appendChild(el('rect',{x:x,y:BASE-ROWS*CH,width:CW,height:ROWS*CH+2,fill:'transparent','data-i':i}));
+    if(wob&&p.h[i]>0){
+      s.appendChild(el('rect',{'class':'halo',x:x+.2,y:BASE-p.h[i]*CH-.8,width:CW-.4,height:CH+.6,rx:3}));
+    }
+    var hit=el('rect',{x:x,y:BASE-ROWS*CH,width:CW,height:ROWS*CH+2,fill:'transparent','data-i':i,
+      tabindex:0,role:'button',
+      'aria-label':p.name+' column '+(i+1)+' of '+N+', '+p.h[i]+' seeds high. Press to poke a lump.'});
+    s.appendChild(hit);
+    if(focusAt&&focusAt.k===kind&&focusAt.i===i&&document.activeElement!==hit){
+      try{hit.focus({preventScroll:true})}catch(e){}
+    }
   }
 }
 function drawAll(){kinds.forEach(function(k){draw(heaps[k],k)})}
@@ -71,6 +83,7 @@ function say(p,txt,cls){p.v.textContent=txt;p.v.className='verdict'+(cls?' '+cls
 function few(n){return n===1?'one':n<=3?'a couple of':'a few'}
 function clearMarks(){kinds.forEach(function(k){heaps[k].wob={};heaps[k].mov={}})}
 function stop(){if(timer){clearInterval(timer);timer=null}}
+function allSettled(){return kinds.every(function(k){return wobblies(heaps[k]).count===0})}
 
 function reset(){
   kinds.forEach(function(k){var p=heaps[k];p.h=[];for(var i=0;i<N;i++)p.h.push(0);p.wob={};p.mov={}});
@@ -101,7 +114,7 @@ function check(){
     var p=heaps[k],w=wobblies(p);
     p.wob=w.set;
     if(w.count===0)say(p,p.name+': I walked along every column. Nothing stands too far above its neighbour. It has settled right.','ok');
-    else say(p,p.name+': '+few(w.count)+' wobbly columns, marked in orange. They stand too far above a neighbour and will slump.','bad');
+    else say(p,p.name+': '+few(w.count)+' wobbly '+(w.count===1?'column':'columns')+', ringed in orange. '+(w.count===1?'It stands':'They stand')+' too far above a neighbour and will slump.','bad');
   });
   drawAll();
 }
@@ -129,16 +142,42 @@ function settle(){
   if(reduce){var guard=3000;while(guard-->0&&step()){}finish();return}
   timer=setInterval(function(){if(!step()){stop();finish()}},70);
 }
+// one grain at a time, for when I want to watch carefully
+function nudge(){
+  stop();
+  if(step()){
+    save();
+    kinds.forEach(function(k){
+      var p=heaps[k],n=wobblies(p).count;
+      if(Object.keys(p.mov).length)say(p,p.name+': one grain slid sideways (green). '+(n?'Still '+few(n)+' wobbly.':'Nothing wobbly now.'),n?'bad':'ok');
+      else say(p,p.name+': this heap is already settled, so I left it be.','ok');
+    });
+  }else{finish()}
+}
 
 document.getElementById('c-drop').onclick=dropSome;
-document.getElementById('c-poke').onclick=function(){poke('sun');poke('mil')};
-document.getElementById('c-check').onclick=check;
-document.getElementById('c-settle').onclick=settle;
-document.getElementById('c-reset').onclick=function(){stop();reset()};
+document.getElementById('c-poke').onclick=function(){focusAt=null;poke('sun');poke('mil')};
+document.getElementById('c-check').onclick=function(){focusAt=null;check()};
+document.getElementById('c-settle').onclick=function(){focusAt=null;settle()};
+var nb=document.getElementById('c-nudge');
+if(nb)nb.onclick=function(){focusAt=null;nudge()};
+document.getElementById('c-reset').onclick=function(){focusAt=null;stop();reset()};
 kinds.forEach(function(k){
-  heaps[k].svg.addEventListener('click',function(e){
-    var a=e.target&&e.target.getAttribute&&e.target.getAttribute('data-i');
-    if(a!==null&&a!==undefined)poke(k,+a);
+  var svg=heaps[k].svg;
+  function idx(e){var a=e.target&&e.target.getAttribute&&e.target.getAttribute('data-i');return(a===null||a===undefined)?null:+a}
+  svg.addEventListener('click',function(e){
+    var i=idx(e);
+    if(i!==null){focusAt=null;poke(k,i)}
+  });
+  svg.addEventListener('focusin',function(e){var i=idx(e);if(i!==null)focusAt={k:k,i:i}});
+  svg.addEventListener('keydown',function(e){
+    var i=idx(e);if(i===null)return;
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();focusAt={k:k,i:i};poke(k,i)}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){
+      e.preventDefault();
+      var j=Math.max(0,Math.min(N-1,i+(e.key==='ArrowLeft'?-1:1)));
+      var t=svg.querySelector('[data-i="'+j+'"]');if(t)t.focus();
+    }
   });
 });
 
