@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Seed Heaps - Pepper's Burrow</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="seeds.css">
+</head>
+<body>
+<header>
+<h1>The Seed Heaps</h1>
+<p>Down in the Frost Pantry I keep two heaps. Sunflower on one side, millet on the other. Never mixed. I have decided. <a href="index.html">Back to the burrow</a></p>
+</header>
+<main>
+<div class="sand">
+<h2>Two drawings, scratched in sand</h2>
+<div class="pair">
+<figure>
+<svg viewBox="0 0 100 100" role="img" aria-label="A sand drawing of a brown mountain of sunflower seeds">
+<g class="s">
+<path d="M8 84 L22 62 L36 44 L50 34 L64 44 L78 62 L92 84"/>
+<path d="M5 86 L95 86"/>
+<path d="M44 62 q5 -3 10 0 q-5 3 -10 0"/>
+<path d="M58 70 q5 -3 10 0 q-5 3 -10 0"/>
+<path d="M30 74 q5 -3 10 0 q-5 3 -10 0"/>
+<path d="M46 78 q5 -3 10 0 q-5 3 -10 0"/>
+<path d="M68 80 q5 -3 10 0 q-5 3 -10 0"/>
+<path d="M20 80 q5 -3 10 0 q-5 3 -10 0"/>
+<path d="M44 48 q5 -3 10 0 q-5 3 -10 0"/>
+<path d="M50 20 L50 26 M42 24 L45 29 M58 24 L55 29"/>
+</g>
+</svg>
+<figcaption><b>The Sunflower Heap.</b> A little brown mountain. Crunchy-smelling, stripy, good for cheeks. The three little scratches on top are me being proud.</figcaption>
+</figure>
+<figure>
+<svg viewBox="0 0 100 100" role="img" aria-label="A sand drawing of a soft golden drift of tiny millet seeds">
+<g class="s">
+<path d="M6 84 Q30 66 52 62 Q76 62 94 84"/>
+<path d="M5 86 L95 86"/>
+<path d="M14 88 Q28 91 44 88" />
+</g>
+<g class="dot">
+<circle cx="40" cy="72" r="1.2"/><circle cx="48" cy="68" r="1.2"/><circle cx="56" cy="70" r="1.2"/>
+<circle cx="62" cy="75" r="1.2"/><circle cx="34" cy="78" r="1.2"/><circle cx="46" cy="76" r="1.2"/>
+<circle cx="54" cy="79" r="1.2"/><circle cx="70" cy="80" r="1.2"/><circle cx="26" cy="81" r="1.2"/>
+<circle cx="40" cy="82" r="1.2"/><circle cx="60" cy="83" r="1.2"/><circle cx="78" cy="83" r="1.2"/>
+<circle cx="18" cy="83" r="1.2"/><circle cx="50" cy="84" r="1.2"/><circle cx="32" cy="70" r="1.2"/>
+<circle cx="66" cy="68" r="1.2"/><circle cx="52" cy="64" r="1.2"/>
+<circle cx="84" cy="52" r="1.2"/><circle cx="88" cy="46" r="1.2"/><circle cx="80" cy="46" r="1.2"/>
+</g>
+</svg>
+<figcaption><b>The Millet Drift.</b> A fine golden drift, soft as flour sliding. It pours instead of piles. The few dots floating up top are the ones that got away from me.</figcaption>
+</figure>
+</div>
+</div>
+
+<div class="sand" style="margin-top:16px">
+<h2>The real heaps, in the pantry</h2>
+<p>Tap the left half of the shelf to drop sunflower seeds. Tap the right half for millet. Each seed settles where it lands, and steep spots slump a little.</p>
+<svg id="tray" viewBox="0 0 400 130" role="img" aria-label="A shelf with a sunflower seed heap on the left and a millet heap on the right. Tap the left or right half to pour more.">
+<line class="shelf" x1="6" y1="121" x2="394" y2="121"/>
+<line x1="200" y1="8" x2="200" y2="121" stroke="#cdb88a" stroke-width="1" stroke-dasharray="3 4"/>
+<text class="lbl" x="100" y="14">sunflower</text>
+<text class="lbl" x="300" y="14">millet</text>
+<g id="layer"></g>
+</svg>
+<p>Sunflower: <b id="sunword"></b>. Millet: <b id="milword"></b>.</p>
+<p class="mood" id="mood" aria-live="polite"></p>
+<div class="row">
+<button id="addsun">+ Sunflower</button>
+<button id="addmil">+ Millet</button>
+<button id="mixbtn">Jumble them (eek)</button>
+<button id="sortbtn" aria-pressed="true">Sort them tidy</button>
+<button id="clearbtn">Empty the shelf</button>
+</div>
+<p class="tiny">Your heaps are remembered on this device only. Nothing is sent anywhere.</p>
+</div>
+<p class="tiny"><a href="index.html">Back home</a></p>
+</main>
+<script src="seeds.js"></script>
+</body>
+</html>
