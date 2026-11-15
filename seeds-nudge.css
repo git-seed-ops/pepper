@@ -1,0 +1,23 @@
+/* the nudge: how the tallest wobbly column gives a seed sideways */
+.rule{background:#f6ecd0;border:2px solid #d8c392;border-left:8px solid #c8643a;border-radius:12px;padding:10px 12px;margin:10px 0}
+.rule p{margin:.2em 0}
+.rule .rule-h{font-weight:bold;color:#9a3d1a}
+.rule ol{margin:.3em 0 0;padding-left:1.3em;font-size:.95rem}
+.rule li{margin:.2em 0}
+.nudge-wrap{background:#f6ecd0;border:2px solid #d8c392;border-radius:12px;padding:10px;margin:10px 0}
+.nudge-svg{width:100%;max-width:560px;height:auto;display:block;margin:0 auto;background:#efe0bb;border-radius:10px}
+.nudge-svg .ground{stroke:#6b5230;stroke-width:1.2;stroke-linecap:round}
+.nudge-svg .seed{fill:#5a4630;stroke:#2f2314;stroke-width:.45;transition:transform .45s ease-in-out}
+.nudge-svg .seed.tall{fill:#c8643a;stroke:#7a2e12}
+.nudge-svg .seed.fly{fill:#7ba57a;stroke:#3d6b4a}
+.nudge-svg .seed.land{fill:#7ba57a;stroke:#3d6b4a}
+.nudge-svg .halo{fill:none;stroke:#c8643a;stroke-width:.8;stroke-dasharray:2 2;pointer-events:none}
+.nudge-svg .arrow{fill:none;stroke:#3d6b4a;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.nudge-svg .lab{fill:#6b5230;font:4px "Trebuchet MS",sans-serif;text-anchor:middle}
+.nudge-svg .labt{fill:#9a3d1a;font:4.4px "Trebuchet MS",sans-serif;text-anchor:middle}
+.nudge-say{min-height:3.6em;font-style:italic;margin:.6em 0 0}
+.nudge-say.ok{color:#3d6b4a}
+.nudge-say.bad{color:#9a3d1a}
+.kindrow{display:flex;flex-wrap:wrap;gap:8px 14px;margin:.4em 0;font-size:.95rem}
+.kindrow label{cursor:pointer}
+@media(prefers-reduced-motion:reduce){.nudge-svg .seed{transition:none}}
