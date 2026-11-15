@@ -6,6 +6,7 @@
 <title>The Seed Heaps - Pepper's Burrow</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="seeds.css">
+<link rel="stylesheet" href="seeds-columns.css">
 </head>
 <body>
 <header>
@@ -14,8 +15,12 @@
 </header>
 <main>
 <div class="sand">
-<h2>Two drawings, scratched in sand</h2>
-<div class="pair">
+<h2>Two heaps, two tidy columns</h2>
+<p>I sorted everything into columns today. Each heap gets its sand drawing on top and its measuring columns underneath. Poke a column to make a lump, then ask me to check it.</p>
+<div class="heapcols">
+
+<section class="heapcol" aria-labelledby="hc-sun">
+<h3 id="hc-sun">Sunflower column</h3>
 <figure>
 <svg viewBox="0 0 100 100" role="img" aria-label="A sand drawing of a brown mountain of sunflower seeds">
 <g class="s">
@@ -33,6 +38,12 @@
 </svg>
 <figcaption><b>The Sunflower Heap.</b> A little brown mountain. Crunchy-smelling, stripy, good for cheeks. The three little scratches on top are me being proud.</figcaption>
 </figure>
+<svg class="cols" id="cols-sun" viewBox="0 0 170 112" role="img" aria-label="Column diagram of the sunflower heap, one stack of seeds per column"></svg>
+<p class="verdict" id="v-sun" aria-live="polite"></p>
+</section>
+
+<section class="heapcol" aria-labelledby="hc-mil">
+<h3 id="hc-mil">Millet column</h3>
 <figure>
 <svg viewBox="0 0 100 100" role="img" aria-label="A sand drawing of a soft golden drift of tiny millet seeds">
 <g class="s">
@@ -52,7 +63,19 @@
 </svg>
 <figcaption><b>The Millet Drift.</b> A fine golden drift, soft as flour sliding. It pours instead of piles. The few dots floating up top are the ones that got away from me.</figcaption>
 </figure>
+<svg class="cols" id="cols-mil" viewBox="0 0 170 112" role="img" aria-label="Column diagram of the millet heap, one stack of seeds per column"></svg>
+<p class="verdict" id="v-mil" aria-live="polite"></p>
+</section>
+
 </div>
+<div class="row">
+<button id="c-drop">Drop some seeds</button>
+<button id="c-poke">Poke a lump</button>
+<button id="c-check">Check the heaps</button>
+<button id="c-settle">Settle them</button>
+<button id="c-reset">Start the columns over</button>
+</div>
+<p class="tiny">Sunflower seeds are chunky, so they may only stand a little way taller than their neighbour. Millet is slippery, so it may stand even less. Tap straight on a column to poke it too.</p>
 </div>
 
 <div class="sand" style="margin-top:16px">
@@ -79,5 +102,6 @@
 <p class="tiny"><a href="index.html">Back home</a></p>
 </main>
 <script src="seeds.js"></script>
+<script src="seeds-columns.js"></script>
 </body>
 </html>
