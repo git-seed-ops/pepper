@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="seeds.css">
 <link rel="stylesheet" href="seeds-columns.css">
+<link rel="stylesheet" href="seeds-nudge.css">
 </head>
 <body>
 <header>
@@ -16,7 +17,7 @@
 <main>
 <div class="sand">
 <h2>Two heaps, two tidy columns</h2>
-<p>I sorted everything into columns today. Each heap gets its sand drawing on top and its measuring columns underneath. Poke a column to make a lump, then ask me to check it.</p>
+<p>Each heap gets its sand drawing on top and its measuring columns underneath. Poke a column to make a lump, then ask me to check it. A column that stands too tall gets an orange ring.</p>
 <div class="heapcols">
 
 <section class="heapcol" aria-labelledby="hc-sun">
@@ -38,7 +39,7 @@
 </svg>
 <figcaption><b>The Sunflower Heap.</b> A little brown mountain. Crunchy-smelling, stripy, good for cheeks. The three little scratches on top are me being proud.</figcaption>
 </figure>
-<svg class="cols" id="cols-sun" viewBox="0 0 170 112" role="img" aria-label="Column diagram of the sunflower heap, one stack of seeds per column"></svg>
+<svg class="cols" id="cols-sun" viewBox="0 0 170 112" role="group" aria-label="Column diagram of the sunflower heap, one stack of seeds per column. Use left and right arrows to move between columns, Enter to poke."></svg>
 <p class="verdict" id="v-sun" aria-live="polite"></p>
 </section>
 
@@ -63,7 +64,7 @@
 </svg>
 <figcaption><b>The Millet Drift.</b> A fine golden drift, soft as flour sliding. It pours instead of piles. The few dots floating up top are the ones that got away from me.</figcaption>
 </figure>
-<svg class="cols" id="cols-mil" viewBox="0 0 170 112" role="img" aria-label="Column diagram of the millet heap, one stack of seeds per column"></svg>
+<svg class="cols" id="cols-mil" viewBox="0 0 170 112" role="group" aria-label="Column diagram of the millet heap, one stack of seeds per column. Use left and right arrows to move between columns, Enter to poke."></svg>
 <p class="verdict" id="v-mil" aria-live="polite"></p>
 </section>
 
@@ -72,10 +73,87 @@
 <button id="c-drop">Drop some seeds</button>
 <button id="c-poke">Poke a lump</button>
 <button id="c-check">Check the heaps</button>
+<button id="c-nudge">Settle one grain</button>
 <button id="c-settle">Settle them</button>
 <button id="c-reset">Start the columns over</button>
 </div>
-<p class="tiny">Sunflower seeds are chunky, so they may only stand a little way taller than their neighbour. Millet is slippery, so it may stand even less. Tap straight on a column to poke it too.</p>
+
+<h3 class="notes-h">Column notes</h3>
+<ul class="notes">
+<li><b>Dropping.</b> Each seed lands on the tallest column it covers, then shuffles sideways while it is steep.</li>
+<li><b>Sunflower</b> seeds are chunky, so they may stand a little taller than a neighbour.</li>
+<li><b>Millet</b> is slippery, so it may stand even less.</li>
+<li><b>Poking.</b> Tap a column, or tab to it and press Enter.</li>
+<li><b>One grain.</b> "Settle one grain" moves just the steepest grain, shown in green, so I can watch carefully.</li>
+</ul>
+</div>
+
+<div class="sand check" style="margin-top:16px" id="settle-check">
+<h2>The settle check</h2>
+<p>A column is wobbly only when it stands taller than a neighbour by more than the limit. The tall one gets the ring. The low one beside it does not, because nothing is about to slide off it. Settling just means moving seeds until no ring is left.</p>
+
+<div class="rule">
+<p class="rule-h">The rule, in one breath</p>
+<p>Wobbly means: taller than a neighbour by more than the limit. Chunky sunflower seeds get a roomier limit. Slippery millet gets a tight one.</p>
+</div>
+
+<div class="chk-grid">
+<figure class="chk-fig">
+<svg viewBox="0 0 100 68" role="img" aria-label="Five small stacks. The middle stack is much taller than the stacks on either side, and only that tall middle stack has an orange ring. The two low stacks beside it have none.">
+<line x1="4" x2="96" y1="58" y2="58" stroke="#6b5230" stroke-width="1.4" stroke-linecap="round"/>
+<g fill="#5a4630" stroke="#2f2314" stroke-width=".5">
+<rect x="8" y="40" width="14" height="18" rx="2"/>
+<rect x="24" y="40" width="14" height="18" rx="2"/>
+<rect x="40" y="22" width="14" height="36" rx="2" fill="#c8643a" stroke="#7a2e12"/>
+<rect x="56" y="40" width="14" height="18" rx="2"/>
+<rect x="72" y="34" width="14" height="24" rx="2"/>
+</g>
+<rect x="39" y="21" width="16" height="38" rx="3" fill="none" stroke="#c8643a" stroke-width="1" stroke-dasharray="2 2"/>
+<text x="47" y="15" text-anchor="middle" font-size="6" fill="#9a3d1a" font-family="Trebuchet MS,sans-serif">too tall</text>
+<text x="23" y="65" text-anchor="middle" font-size="5" fill="#6b5230" font-family="Trebuchet MS,sans-serif">low: fine</text>
+</svg>
+<figcaption>Only the tall one is ringed.</figcaption>
+</figure>
+<div class="chk-live">
+<p class="chk-title">Right now, on your heaps:</p>
+<div class="chk-row"><span class="chk-name">Sunflower</span><span class="chk-dots" id="dots-sun" aria-hidden="true"></span><span class="chk-say" id="say-sun" aria-live="polite"></span></div>
+<div class="chk-row"><span class="chk-name">Millet</span><span class="chk-dots" id="dots-mil" aria-hidden="true"></span><span class="chk-say" id="say-mil" aria-live="polite"></span></div>
+<p class="tiny">One dot for each column. Orange means wobbly. It updates whenever you poke, drop or settle.</p>
+</div>
+</div>
+<ol class="chk-steps">
+<li>Walk along the columns and compare each one with the neighbour on either side.</li>
+<li>Ring any column that is taller than a neighbour by more than the limit.</li>
+<li>Move a grain from a ringed column to its lower neighbour, then look again.</li>
+<li>No rings left? It has settled. Pat pat.</li>
+</ol>
+</div>
+
+<div class="sand" style="margin-top:16px" id="nudge">
+<h2>Nudging the tallest one sideways</h2>
+<p>When more than one column is ringed, I start with the tallest. It hands its top seed to whichever neighbour is lower, and then I look again.</p>
+<div class="rule">
+<p class="rule-h">The nudge, three little moves</p>
+<ol>
+<li>Find the tallest ringed column.</li>
+<li>Pick its lower neighbour. On the very edge there is only one neighbour, so the seed goes inward.</li>
+<li>Slide the top seed across, one at a time. Never off the edge, because a seed that rolls off skitters far under the bedding.</li>
+</ol>
+</div>
+<div class="nudge-wrap">
+<div class="kindrow" role="radiogroup" aria-label="Kind of seed">
+<label><input type="radio" name="n-kind" value="sun" checked> Chunky sunflower (roomy limit)</label>
+<label><input type="radio" name="n-kind" value="mil"> Slippery millet (tight limit)</label>
+</div>
+<svg class="nudge-svg" id="nudge-svg" viewBox="0 -6 120 78" role="img" aria-label="A row of nine small seed stacks, with one stack standing much taller than the rest. A green arrow shows its top seed sliding to its lower neighbour."></svg>
+<p class="nudge-say" id="nudge-say" aria-live="polite"></p>
+<div class="row">
+<button id="n-nudge">Nudge the tallest</button>
+<button id="n-auto" aria-pressed="false">Nudge until settled</button>
+<button id="n-new">A new heap</button>
+</div>
+<p class="tiny">The green seed is the one on the move. Each stack has its column number underneath.</p>
+</div>
 </div>
 
 <div class="sand" style="margin-top:16px">
@@ -103,5 +181,7 @@
 </main>
 <script src="seeds.js"></script>
 <script src="seeds-columns.js"></script>
+<script src="seeds-check.js"></script>
+<script src="seeds-nudge.js"></script>
 </body>
 </html>
