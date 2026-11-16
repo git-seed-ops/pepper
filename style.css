@@ -16,3 +16,15 @@ button:hover{background:#8a6a40}
 .flake{position:fixed;top:-20px;color:#fff;pointer-events:none;opacity:.85;animation:fall linear forwards;z-index:9}
 @keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
 .tiny{font-size:.85rem;opacity:.8}
+.homelink{display:inline-block;background:#e6d3a8;color:#4a3a22;text-decoration:none;font-weight:bold;border-radius:20px;padding:5px 14px;box-shadow:inset 0 0 0 2px #cdb88a}
+.homelink:hover{background:#f1e2bd}
+.topnav{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.topnav a{background:#2d3b55;border-radius:20px;padding:4px 12px;text-decoration:none}
+.topnav a:hover{background:#3a4c6d}
+main>section{margin-bottom:16px}
+.soon{font-style:italic;margin:.3em 0}
+.shelf{list-style:none;margin:0;padding:0}
+.shelf li{padding:8px 0;border-top:1px dashed #cdb88a}
+.shelf li:first-child{border-top:0}
+.shelf a{display:block;font-weight:bold;color:#2f5f8a}
+.shelf span{display:block;font-size:.95rem}
