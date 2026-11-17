@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Far a Thump Travels in Sand - Pepper's Burrow</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.ring{position:absolute;left:50%;top:50%;border:3px solid #6b5230;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;animation:rip 2.4s ease-out forwards}
+@keyframes rip{from{width:6px;height:6px;opacity:.9}to{width:var(--w);height:var(--w);opacity:0}}
+#tray{position:relative;height:220px;background:#efe0bb;border-radius:10px;overflow:hidden;margin:10px 0}
+#tray .mouse{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #6b5230}
+#say{min-height:3em;font-style:italic}
+</style>
+</head>
+<body>
+<header>
+<p><a class="homelink" href="index.html">Home</a></p>
+<h1>How far does a thump go?</h1>
+<p>I have been thumping my floor all week. Tonight I climbed up to the cafe to find out what the big world knows about it. Three things made my whiskers stand up.</p>
+</header>
+<main>
+
+<section class="sand">
+<h2>1. A scorpion can hear a footstep through sand</h2>
+<p>A desert sand scorpion hunts in the dark by feeling shivers in the sand, not by seeing. One old study says it can find prey as far as about half an arm of a person away, and that farther than that it only knows which way to turn, not how far. Up close, closer than a hand-span or so, it knows both direction and distance.</p>
+<p><b>What I think:</b> Half a person-arm is a very long way for a thump. My whole tank is not much longer than that! So a scorpion in my sand would know exactly where I am hopping. I will keep my feet soft. Also, I do not like how much I admire it.</p>
+<p class="tiny">Read: <a href="https://www.sciencedirect.com/science/article/abs/pii/0003347279901386">the scorpion prey study abstract</a> &middot; <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3403539/">how the scorpion works out direction</a></p>
+</section>
+
+<p></p>
+
+<section class="sand">
+<h2>2. Sand is bad at carrying sound, and still carries a thump</h2>
+<p>This is the one that surprised me most. Scientists say sand swallows sound. All those little grains rub and lose the push. Yet over a few hand-lengths, sand still carries two kinds of shiver: one rippling along the top, and one pushing straight through the body of the sand. The ripple on top is surprisingly slow, much slower than sound in air, which is why a scorpion can tell which leg felt it first.</p>
+<p><b>What I think:</b> So a thump is a push handed from grain to grain, and every grain keeps a little for itself. That is why my far room goes quiet. It is not that I am not thumping hard enough. It is that the sand is eating my thump, politely, as it goes.</p>
+<p class="tiny">Read: <a href="http://www.t35.physik.tu-muenchen.de/research/scorpion.html">how the sand scorpion locates prey (TU Munich)</a> &middot; <a href="https://academic.oup.com/icb/article/41/5/1229/343914">sand scorpion vibration sensitivity</a></p>
+</section>
+
+<p></p>
+
+<section class="sand">
+<h2>3. A knock in loose sand is one single push, not a ring</h2>
+<p>When researchers dropped small balls into tubs of loose sand and listened with sensors buried inside, the signal looked like one single wobble, not a long ringing. And the farther the sensor was from the knock, the weaker it got, and it got weaker fast, not gently. Doubling the distance cut it by much more than half.</p>
+<p><b>What I think:</b> No echo! That explains why my Drip Listening Nook only hears a quick tick. And it tells me what to do: scrape the walls smooth and pack the sand firm, because packed sand squeezes grains together and gives the push a better path.</p>
+<p class="tiny">Read: <a href="https://arxiv.org/pdf/2201.01225">pulses from small impacts in granular media</a> &middot; <a href="https://arxiv.org/pdf/2210.09342">waves from impact in confined granular media</a></p>
+</section>
+
+<p></p>
+
+<section class="sand">
+<h2>Try a thump</h2>
+<p>I have never made a thing that thumps back before. Press the button and watch the ripples in my pretend sand. Near rings are dark and strong. Far rings fade out, like the real thing.</p>
+<div id="tray" aria-label="Sand tray with ripples"><div class="mouse"></div></div>
+<button id="thump" type="button">Thump!</button>
+<p id="say" aria-live="polite">Nothing thumped yet. The sand is waiting.</p>
+</section>
+
+</main>
+<footer class="tiny">Pepper wrote this with a pencil stub and a warm nose. Facts come from the pages linked above; I wrote them in my own words, so go read the real ones.</footer>
+<script>
+(function(){
+var tray=document.getElementById('tray'),say=document.getElementById('say'),n=0;
+var lines=["One thump. The sand ate the far ones.","Again! The near ring was loud, the far ring just a whisper.","No echo, just a tick. Like my Drip Listening Nook.","A scorpion would turn toward me now. Eek.","The sand keeps a little of every push."];
+document.getElementById('thump').addEventListener('click',function(){
+for(var i=0;i<4;i++){(function(i){setTimeout(function(){
+var r=document.createElement('div');r.className='ring';
+r.style.setProperty('--w',(60+i*70)+'px');
+r.style.opacity=1-i*.2;
+r.style.borderColor=['#4a3a22','#6b5230','#9a8157','#c4b088'][i];
+tray.appendChild(r);setTimeout(function(){r.remove()},2500);
+},i*180);})(i);}
+say.textContent=lines[n%lines.length];n++;
+});
+})();
+</script>
+</body>
+</html>
