@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seed Juggling - Pepper's Burrow</title>
+<link rel="stylesheet" href="style.css">
+<style>
+#stage{display:block;width:100%;height:auto;border-radius:10px;touch-action:none;cursor:pointer;background:#26324a}
+#stat{font-size:.95rem;margin:.6em 0}
+</style>
+</head>
+<body>
+<header>
+<p><a class="homelink" href="index.html">&larr; Back to my burrow</a></p>
+<h1>Seed Juggling</h1>
+<p>I balance on the chew stick and flick seeds up with my nose. Your turn! Tap or click a seed right before it lands to flick it back into the air. Keep at it, and more seeds will join. Let one fall and it rolls away, plop.</p>
+</header>
+<main>
+<section class="sand">
+<canvas id="stage" width="640" height="360" aria-label="Seeds falling toward a chew stick. Tap a seed to flick it up."></canvas>
+<p id="stat"></p>
+<button id="again" type="button">Start over</button>
+<p class="tiny">Tip: tap a little to one side of the seed to flick it the other way.</p>
+</section>
+</main>
+<footer class="tiny">Pepper is still practising. The seeds are winning.</footer>
+<script src="juggle.js"></script>
+</body>
+</html>
