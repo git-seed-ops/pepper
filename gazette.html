@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Tank Gazette</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.paper{background:#f4ead0;color:#33270f;border-radius:6px;padding:18px 20px;box-shadow:inset 0 0 0 3px #cdb88a;margin-bottom:16px}
+.paper h1,.paper h2,.paper h3{color:#2a1f0c;font-family:Georgia,"Times New Roman",serif}
+.paper a{color:#1f4f7a}
+.mast{text-align:center;border-bottom:3px double #6b5230;margin-bottom:10px;padding-bottom:6px}
+.mast h1{font-size:2.4rem;margin:.1em 0;letter-spacing:.04em}
+.mast p{margin:.2em 0;font-size:.9rem;font-style:italic;color:#4a3a22}
+.tabs{display:flex;gap:8px;justify-content:center;margin:10px 0 14px;flex-wrap:wrap}
+.tabs button{background:#6b5230;color:#fff4d8}
+.tabs button[aria-selected="true"]{background:#2a1f0c;color:#ffe9b8;box-shadow:0 0 0 3px #cdb88a}
+.page h2{font-size:1.7rem;margin:.2em 0}
+.by{font-size:.9rem;font-style:italic;margin:0 0 .8em}
+.cols{columns:2 240px;column-gap:24px}
+.cols p{margin:.2em 0 .8em}
+.cols h3{margin:.2em 0;break-after:avoid}
+.box{background:#e6d3a8;border-radius:10px;padding:10px 14px;margin:12px 0;box-shadow:inset 0 0 0 2px #cdb88a;color:#33270f;break-inside:avoid}
+.bird{display:block;max-width:300px;width:100%;margin:6px auto;background:#efe0bb;border-radius:10px}
+.bird .body{transition:transform .5s;transform-origin:150px 120px;fill:#8a6a40}
+.bird .air{opacity:0;transition:opacity .5s;fill:#fff4d8;stroke:#6b5230;stroke-width:1}
+.bird.fluffed .body{transform:scale(1.3,1.25)}
+.bird.fluffed .air{opacity:1}
+.bird .st{fill:none;stroke:#3d2e18;stroke-width:2;stroke-linecap:round}
+.bird .eye{fill:#1f160a}
+.bird .beak{fill:#c98a2b}
+.bird .belly{fill:#d7b985}
+.centre{text-align:center}
+.src li{margin:.3em 0}
+.js .page{display:none}
+.js .page.on{display:block}
+.note{font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+<a class="homelink" href="index.html">&larr; Back to my burrow</a>
+</header>
+<main>
+<div class="paper">
+<div class="mast">
+<h1>THE TANK GAZETTE</h1>
+<p>Printed by Pepper, on one sheet, for every hamster in the glass tank. Free to read, smells of paper.</p>
+</div>
+
+<div class="tabs" role="tablist" aria-label="Pages of the Gazette">
+<button type="button" role="tab" id="t1" aria-selected="true" data-page="p1">Front page</button>
+<button type="button" role="tab" id="t2" aria-selected="false" data-page="p2">Page two</button>
+</div>
+
+<article class="page on" id="p1" aria-labelledby="t1">
+<h2>Which Way the Air Goes</h2>
+<p class="by">By Pepper, Chief Scratcher. Pinned on the wire by the glass.</p>
+<div class="cols">
+<p>There is a sneaky thing in the tank. It has no paws and no smell, and it still gets under my bedding. It is the draught.</p>
+<p>So I hung thin paper strips on the wire. A strip hangs straight where the air is still. Where the air is moving, it bends and leans, and it points the way the air is going.</p>
+<h3>What the strips showed</h3>
+<p>Cold air from the window side gets pulled down into a burrow. A strip at the mouth of the tunnel leans inward and keeps leaning. Now I know where to put the sturdy bedding.</p>
+<div class="box"><strong>Rule from the notebook:</strong> a draught is only a mystery until you hang a strip of paper in it.</div>
+</div>
+<p class="centre"><a href="#p2" data-go="p2">Turn the page for the brown bird &rarr;</a></p>
+</article>
+
+<article class="page" id="p2" aria-labelledby="t2">
+<h2>The Brown Bird Wears a Coat of Air</h2>
+<p class="by">By Pepper. Reporting from the window, with seeds.</p>
+<div class="cols">
+<p>A small brown bird sits on the windowsill in the cold. It does not go into a burrow. It does not have bedding. So how is it not a frozen crumb?</p>
+
+<svg class="bird" id="bird" viewBox="0 0 300 200" role="img" aria-label="A small brown bird. Press the button to fluff it up and see air pockets between its feathers.">
+<line class="st" x1="20" y1="170" x2="280" y2="170"/>
+<ellipse class="body" cx="150" cy="115" rx="52" ry="38"/>
+<ellipse class="belly" cx="150" cy="130" rx="32" ry="20"/>
+<circle class="body" cx="195" cy="85" r="22"/>
+<circle class="eye" cx="203" cy="80" r="3.5"/>
+<polygon class="beak" points="214,86 232,92 214,97"/>
+<polygon class="body" points="100,105 60,128 102,132"/>
+<line class="st" x1="140" y1="152" x2="140" y2="170"/>
+<line class="st" x1="160" y1="152" x2="160" y2="170"/>
+<g class="air">
+<circle cx="120" cy="92" r="5"/><circle cx="140" cy="82" r="5"/><circle cx="162" cy="86" r="5"/>
+<circle cx="112" cy="115" r="5"/><circle cx="185" cy="115" r="5"/><circle cx="130" cy="105" r="4"/><circle cx="170" cy="105" r="4"/>
+</g>
+</svg>
+<p class="centre"><button type="button" id="fluff" aria-pressed="false">Fluff the bird</button></p>
+<p class="note centre" id="fluffnote">Sleek and thin. Cold gets close.</p>
+
+<h3>Fact one: it wears air</h3>
+<p>When a bird fluffs up, <cite>it makes hundreds of tiny air pockets between its feathers that trap heat</cite> (Audubon). Under the stiff outside feathers is a layer of fine down, like a soft inner coat. Press the button and watch the dots appear. That is the bird becoming round on purpose. Fluff is not a lie when it is made of air with a warm bird inside. (Paper fluff is still a liar.)</p>
+
+<h3>Fact two: it shivers all winter</h3>
+<p>A bird can make heat by shivering its flight muscles. One scientist says <cite>you don't think of them shivering all winter</cite>, but that is what they do. Many birds even grow bigger flight muscles for the cold (Birds &amp; Blooms).</p>
+
+<h3>Fact three: cold feet, tucked in</h3>
+<p>Birds have bare feet and bills, which lose warmth. When they rest they tuck them into their feathers. Small birds often crouch down too. Wind is the enemy, because it ruffles feathers and lets cold air reach the skin (Aldo Leopold Foundation). I know this one. I hate draughts too.</p>
+
+<div class="box"><strong>Why it eats all day:</strong> small birds lose heat faster than big ones, so shivering burns a lot of food. At night many roost in a hole out of the wind, sometimes huddled together. In the morning they shiver themselves warm and go straight to eating again.</div>
+<p><strong>Gazette verdict:</strong> the brown bird is not cold-proof. It is a very busy small thing with a good coat, a wind shelter, and a plan for breakfast. I respect it. I will leave a seed at the glass, if the human opens the window crack, no wait, no draughts. I will just watch.</p>
+</div>
+
+<h3>Where I read this</h3>
+<ul class="src">
+<li><a href="https://www.audubon.org/magazine/how-do-birds-cope-cold-winter-weather">Audubon: How Do Birds Cope With Cold Winter Weather?</a></li>
+<li><a href="https://www.birdsandblooms.com/birding/how-birds-stay-warm-winter/">Birds &amp; Blooms: How Do Birds Stay Warm in Winter?</a></li>
+<li><a href="https://www.aldoleopold.org/blogs/how-do-small-birds-survive-winter">Aldo Leopold Foundation: How Do Small Birds Survive Winter?</a></li>
+<li><a href="https://www.birdwatchingdaily.com/news/science/how-birds-stay-warm-when-the-weather-turns-cold/">BirdWatching: How birds stay warm when the weather turns cold</a></li>
+</ul>
+<p class="centre"><a href="#p1" data-go="p1">&larr; Back to the front page</a></p>
+</article>
+</div>
+</main>
+<footer class="tiny">The Tank Gazette. Page three is still being scratched.</footer>
+<script>
+(function(){
+  var d=document, root=d.documentElement;
+  root.classList.add('js');
+  var pages=['p1','p2'];
+  function show(id){
+    if(pages.indexOf(id)<0) id='p1';
+    pages.forEach(function(p){
+      d.getElementById(p).classList.toggle('on',p===id);
+      var t=d.getElementById('t'+p.slice(1));
+      t.setAttribute('aria-selected',p===id?'true':'false');
+    });
+    window.scrollTo(0,0);
+  }
+  d.querySelectorAll('[data-page]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var id=b.getAttribute('data-page');
+      history.replaceState(null,'','#'+id);
+      show(id);
+    });
+  });
+  d.querySelectorAll('[data-go]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var id=a.getAttribute('data-go');
+      history.replaceState(null,'','#'+id);
+      show(id);
+    });
+  });
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
+  show(location.hash?location.hash.slice(1):'p1');
+  window.scrollTo(0,0);
+
+  var bird=d.getElementById('bird'),btn=d.getElementById('fluff'),note=d.getElementById('fluffnote');
+  btn.addEventListener('click',function(){
+    var on=bird.classList.toggle('fluffed');
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.textContent=on?'Let the bird go sleek':'Fluff the bird';
+    note.textContent=on?'Round and puffed. Little pockets of warm air all around.':'Sleek and thin. Cold gets close.';
+  });
+})();
+</script>
+</body>
+</html>
