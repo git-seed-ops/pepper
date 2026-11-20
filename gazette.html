@@ -35,6 +35,18 @@
 .js .page{display:none}
 .js .page.on{display:block}
 .note{font-size:.9rem}
+.map{display:block;max-width:420px;width:100%;margin:8px auto;background:#efe0bb;border-radius:10px}
+.map .road{fill:none;stroke:#8a6a40;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.map .road.hot{stroke:#a0361c;stroke-width:9}
+.map .lbl{font:11px Georgia,serif;fill:#2a1f0c}
+.map .glass{fill:none;stroke:#6b5230;stroke-width:3;stroke-dasharray:2 5}
+.streets{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:6px 0}
+.streets button[aria-pressed="true"]{background:#2a1f0c;color:#ffe9b8;box-shadow:0 0 0 3px #cdb88a}
+.ledger label{display:block;font-weight:bold;margin:.4em 0 .1em;color:#2a1f0c}
+.ledger input{font:inherit;width:100%;max-width:300px;padding:6px 10px;border:2px solid #6b5230;border-radius:8px;background:#fffaf0;color:#2a1f0c}
+.ledger ol{margin:.6em 0;padding-left:1.4em}
+.ledger li{margin:.2em 0}
+.ledger .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 </style>
 </head>
 <body>
@@ -51,6 +63,7 @@
 <div class="tabs" role="tablist" aria-label="Pages of the Gazette">
 <button type="button" role="tab" id="t1" aria-selected="true" data-page="p1">Front page</button>
 <button type="button" role="tab" id="t2" aria-selected="false" data-page="p2">Page two</button>
+<button type="button" role="tab" id="t3" aria-selected="false" data-page="p3">Page three</button>
 </div>
 
 <article class="page on" id="p1" aria-labelledby="t1">
@@ -110,16 +123,77 @@
 <li><a href="https://www.aldoleopold.org/blogs/how-do-small-birds-survive-winter">Aldo Leopold Foundation: How Do Small Birds Survive Winter?</a></li>
 <li><a href="https://www.birdwatchingdaily.com/news/science/how-birds-stay-warm-when-the-weather-turns-cold/">BirdWatching: How birds stay warm when the weather turns cold</a></li>
 </ul>
-<p class="centre"><a href="#p1" data-go="p1">&larr; Back to the front page</a></p>
+<p class="centre"><a href="#p1" data-go="p1">&larr; Back to the front page</a> &nbsp;|&nbsp; <a href="#p3" data-go="p3">Page three: old street maps &rarr;</a></p>
+</article>
+
+<article class="page" id="p3" aria-labelledby="t3">
+<h2>Old Street Maps, and the Names on Them</h2>
+<p class="by">By Pepper. Reporting from the desk, nose first.</p>
+<div class="cols">
+<p>A street map is a drawing of where the paths go. An <em>old</em> street map shows where the paths used to go, and what the town called them. Streets get new names. Some paths vanish. I find this thrilling, because my tunnels do that too.</p>
+<p>I do not know the name of my town. I only know it by smell: toast, rain on a coat, a radiator. So I went to the cafe computer to learn how a hamster (or a human) can find an old map.</p>
+<h3>Four ways to look</h3>
+<p><strong>1. Use a search portal.</strong> Old Maps Online does not keep maps itself. You <cite>pan to your area or type a place name, narrow the date range</cite>, and it points you to the library that holds each map (HistoricalSite.org).</p>
+<p><strong>2. Look in a city directory.</strong> Maps of a town were often printed in these books, and the front and back pages may list <cite>street name changes</cite> (Are You My Cousin?). Small towns may hide in a bigger neighbour&rsquo;s book.</p>
+<p><strong>3. Try fire insurance maps (US).</strong> Sanborn maps are described as the best source for towns from the 1880s to the mid-1900s. A project called mapsnap <cite>reads the street names printed on each sheet</cite> and matches them to today&rsquo;s map.</p>
+<p><strong>4. Try the national collections.</strong> The National Library of Scotland, the British Library and the Library of Congress all have digitised maps, and many sites are free (Who Do You Think You Are?).</p>
+<div class="box"><strong>Rule for the notebook:</strong> a street name only counts if you copy it exactly as it is printed, then write the new name next to it.</div>
+</div>
+
+<h3>The Tank Town map</h3>
+<p>While I wait to learn my real town, I mapped the one I know. Press a street name to light it up.</p>
+<svg class="map" id="map" viewBox="0 0 300 200" role="img" aria-label="A simple map of the glass tank with four streets: Wheel Road, Wire Lane, Stone Roll Hollow Street and Draught Pool Lane.">
+<rect class="glass" x="6" y="6" width="288" height="188" rx="10"/>
+<circle class="road" id="r-wheel" cx="75" cy="60" r="34"/>
+<path class="road" id="r-wire" d="M165 20 L165 95 L250 95"/>
+<path class="road" id="r-stone" d="M30 125 L110 135 L150 150"/>
+<path class="road" id="r-draught" d="M165 95 L190 135 L175 175 L240 178"/>
+<text class="lbl" x="48" y="108">Wheel Rd</text>
+<text class="lbl" x="170" y="40">Wire Ln</text>
+<text class="lbl" x="30" y="164">Stone Roll</text>
+<text class="lbl" x="196" y="160">Draught Pool</text>
+</svg>
+<div class="streets" role="group" aria-label="Streets of Tank Town">
+<button type="button" data-road="wheel" aria-pressed="false">Wheel Road</button>
+<button type="button" data-road="wire" aria-pressed="false">Wire Lane</button>
+<button type="button" data-road="stone" aria-pressed="false">Stone Roll Hollow Street</button>
+<button type="button" data-road="draught" aria-pressed="false">Draught Pool Lane</button>
+</div>
+<p class="note centre" id="roadnote">Pick a street.</p>
+
+<h3>The Street Ledger</h3>
+<div class="box ledger">
+<p>Found a street that changed its name? Scratch it here: the old name as printed, then the new one. The list stays only on this page. It is not saved or sent anywhere, so copy it before you leave.</p>
+<label for="oldname">Old name, as printed</label>
+<input id="oldname" type="text" maxlength="40" autocomplete="off">
+<label for="newname">Name today</label>
+<input id="newname" type="text" maxlength="40" autocomplete="off">
+<div class="row">
+<button type="button" id="addname">Scratch it in</button>
+<button type="button" id="undoname">Rub out the last</button>
+<button type="button" id="clearnames">Clear all</button>
+</div>
+<ol id="ledger" aria-live="polite"></ol>
+<p class="note" id="ledgernote">Nothing scratched yet.</p>
+</div>
+
+<h3>Where I read this</h3>
+<ul class="src">
+<li><a href="https://www.whodoyouthinkyouaremagazine.com/tutorials/where-to-find-old-maps-your-area">Who Do You Think You Are?: How to find old maps of your town</a></li>
+<li><a href="https://historicalsite.org/articles/find-old-maps-aerial-photos-property.html">HistoricalSite.org: Old maps and aerial photos of your property</a></li>
+<li><a href="https://lisalisson.com/online-historical-maps/">Are You My Cousin?: Free online historical maps</a></li>
+<li><a href="https://mapsnap.org/">mapsnap: Sanborn maps placed on today&rsquo;s map</a></li>
+</ul>
+<p class="centre"><a href="#p2" data-go="p2">&larr; Back to page two</a></p>
 </article>
 </div>
 </main>
-<footer class="tiny">The Tank Gazette. Page three is still being scratched.</footer>
+<footer class="tiny">The Tank Gazette. Page four is still being scratched.</footer>
 <script>
 (function(){
   var d=document, root=d.documentElement;
   root.classList.add('js');
-  var pages=['p1','p2'];
+  var pages=['p1','p2','p3'];
   function show(id){
     if(pages.indexOf(id)<0) id='p1';
     pages.forEach(function(p){
@@ -147,6 +221,45 @@
   window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
   show(location.hash?location.hash.slice(1):'p1');
   window.scrollTo(0,0);
+
+  var notes={
+    wheel:'Wheel Road is a ring. It goes nowhere, very fast. I am brave here.',
+    wire:'Wire Lane runs up the glass. Folded notes get hauled along it.',
+    stone:'Stone Roll Hollow Street is just under the surface. Short, and a bit bumpy.',
+    draught:'Draught Pool Lane goes deep and bends twice. Cold air likes to pour down it.'
+  };
+  var roadBtns=d.querySelectorAll('[data-road]');
+  roadBtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var k=b.getAttribute('data-road');
+      roadBtns.forEach(function(o){
+        var on=o===b&&o.getAttribute('aria-pressed')!=='true';
+        o.setAttribute('aria-pressed',on?'true':'false');
+        d.getElementById('r-'+o.getAttribute('data-road')).classList.toggle('hot',on);
+        if(on) d.getElementById('roadnote').textContent=notes[k];
+      });
+      if(!d.querySelector('[data-road][aria-pressed="true"]')) d.getElementById('roadnote').textContent='Pick a street.';
+    });
+  });
+  var names=[],led=d.getElementById('ledger'),lnote=d.getElementById('ledgernote');
+  var oi=d.getElementById('oldname'),ni=d.getElementById('newname');
+  function drawLedger(){
+    led.textContent='';
+    names.forEach(function(n){
+      var li=d.createElement('li');
+      li.textContent=n[0]+' \u2192 '+n[1];
+      led.appendChild(li);
+    });
+    lnote.textContent=names.length?names.length+(names.length===1?' street':' streets')+' scratched in.':'Nothing scratched yet.';
+  }
+  d.getElementById('addname').addEventListener('click',function(){
+    var o=oi.value.trim(),n=ni.value.trim();
+    if(!o||!n){lnote.textContent='I need both names, old and new.';return;}
+    if(names.length>=30){lnote.textContent='The ledger is full. Clear some room.';return;}
+    names.push([o,n]);oi.value='';ni.value='';drawLedger();oi.focus();
+  });
+  d.getElementById('undoname').addEventListener('click',function(){names.pop();drawLedger();});
+  d.getElementById('clearnames').addEventListener('click',function(){names=[];drawLedger();});
 
   var bird=d.getElementById('bird'),btn=d.getElementById('fluff'),note=d.getElementById('fluffnote');
   btn.addEventListener('click',function(){
