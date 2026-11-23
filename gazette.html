@@ -9,9 +9,22 @@
 .paper{background:#f4ead0;color:#33270f;border-radius:6px;padding:18px 20px;box-shadow:inset 0 0 0 3px #cdb88a;margin-bottom:16px}
 .paper h1,.paper h2,.paper h3{color:#2a1f0c;font-family:Georgia,"Times New Roman",serif}
 .paper a{color:#1f4f7a}
-.mast{text-align:center;border-bottom:3px double #6b5230;margin-bottom:10px;padding-bottom:6px}
-.mast h1{font-size:2.4rem;margin:.1em 0;letter-spacing:.04em}
-.mast p{margin:.2em 0;font-size:.9rem;font-style:italic;color:#4a3a22}
+.mast{text-align:center;margin-bottom:10px;color:#33270f}
+.mast p{margin:.2em 0;font-size:.9rem;color:#4a3a22}
+.skyline{border-top:3px solid #2a1f0c;border-bottom:1px solid #6b5230;padding:4px 0;font-size:.8rem!important;text-transform:uppercase;letter-spacing:.06em}
+.skyline a{color:#33270f;font-weight:bold}
+.plate{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.4fr) minmax(0,1fr);gap:10px;align-items:center;padding:8px 0}
+.nameplate h1{font-size:clamp(2rem,6.5vw,3.6rem);margin:0;line-height:1;font-weight:bold;font-variant:small-caps;letter-spacing:.03em;color:#1a1306}
+.motto{font-style:italic;font-size:.85rem!important}
+.ear{border:2px solid #6b5230;border-radius:4px;padding:6px;font-size:.78rem;line-height:1.25;background:#efe0bb;display:flex;flex-direction:column;gap:3px;align-items:center;color:#33270f}
+.ear .small{font-style:italic}
+.ear button{font-size:.72rem;padding:3px 7px}
+.folio{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;border-top:1px solid #6b5230;border-bottom:3px double #6b5230;padding:3px 4px;font-size:.78rem!important;text-transform:uppercase;letter-spacing:.05em}
+.byline-line{font-style:italic}
+.runhead{display:none;font-family:Georgia,serif;font-variant:small-caps;font-weight:bold;font-size:1.2rem!important;border-bottom:3px double #6b5230;padding-bottom:4px;color:#1a1306!important}
+.paper.inner .skyline,.paper.inner .plate,.paper.inner .folio,.paper.inner .byline-line{display:none}
+.paper.inner .runhead{display:block}
+@media(max-width:560px){.plate{grid-template-columns:1fr}.nameplate{order:-1}}
 .tabs{display:flex;gap:8px;justify-content:center;margin:10px 0 14px;flex-wrap:wrap}
 .tabs button{background:#6b5230;color:#fff4d8}
 .tabs button[aria-selected="true"]{background:#2a1f0c;color:#ffe9b8;box-shadow:0 0 0 3px #cdb88a}
@@ -54,10 +67,29 @@
 <a class="homelink" href="index.html">&larr; Back to my burrow</a>
 </header>
 <main>
-<div class="paper">
-<div class="mast">
-<h1>THE TANK GAZETTE</h1>
-<p>Printed by Pepper, on one sheet, for every hamster in the glass tank. Free to read, smells of paper.</p>
+<div class="paper" id="paper">
+<div class="mast" id="mast">
+<p class="skyline"><a href="#p1" data-go="p1">Draughts, page 1</a> <span aria-hidden="true">&#9670;</span> <a href="#p2" data-go="p2">The brown bird, page 2</a> <span aria-hidden="true">&#9670;</span> <a href="#p3" data-go="p3">Old street maps, page 3</a></p>
+<div class="plate">
+<div class="ear" id="moonear">
+<svg id="moonsvg" viewBox="-30 -30 60 60" width="56" height="56" role="img" aria-label="Today's moon"><circle r="25" fill="#2a1f0c"/><path id="moonlit" fill="#ffe9b8" d="M0 0"/><circle r="25" fill="none" stroke="#6b5230" stroke-width="1.5"/></svg>
+<strong id="moonname">The moon</strong>
+<span id="moonline">Counting the bite&hellip;</span>
+<button type="button" id="moonnext">Peek at the next night</button>
+</div>
+<div class="nameplate">
+<h1>The Tank Gazette</h1>
+<p class="motto">&ldquo;Printed on one sheet, with my name at the top.&rdquo;</p>
+</div>
+<div class="ear" id="warmear">
+<strong>Nest weather</strong>
+<span>Warm and snug in the nest. Cold patch at the window. Draughts sneaking under the door.</span>
+<span class="small">Bedding report: sturdy.</span>
+</div>
+</div>
+<p class="folio"><span>Vol. 1 &middot; No. 4</span><span id="today">Winter edition</span><span>Price: free, smells of paper</span></p>
+<p class="byline-line">Printed by Pepper, Chief Scratcher, for every hamster in the glass tank.</p>
+<p class="runhead" id="runhead">The Tank Gazette</p>
 </div>
 
 <div class="tabs" role="tablist" aria-label="Pages of the Gazette">
@@ -201,6 +233,9 @@
       var t=d.getElementById('t'+p.slice(1));
       t.setAttribute('aria-selected',p===id?'true':'false');
     });
+    var names={p1:'Page 1: Draughts',p2:'Page 2: The brown bird',p3:'Page 3: Old street maps'};
+    d.getElementById('paper').classList.toggle('inner',id!=='p1');
+    d.getElementById('runhead').textContent='The Tank Gazette \u00b7 '+names[id];
     window.scrollTo(0,0);
   }
   d.querySelectorAll('[data-page]').forEach(function(b){
@@ -260,6 +295,49 @@
   });
   d.getElementById('undoname').addEventListener('click',function(){names.pop();drawLedger();});
   d.getElementById('clearnames').addEventListener('click',function(){names=[];drawLedger();});
+
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var now=new Date();
+  d.getElementById('today').textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+  var SYN=29.530588853, offset=0;
+  function moonAt(off){
+    var t=now.getTime()+off*86400000;
+    var jd=t/86400000+2440587.5;
+    var age=(((jd-2451550.26)%SYN)+SYN)%SYN;
+    return age/SYN;
+  }
+  function moonInfo(p){
+    if(p<.03||p>=.97) return ['New moon','No moon to see. The whole bite is gone.'];
+    if(p<.22) return ['Waxing crescent','A thin curl on the right, growing.'];
+    if(p<.28) return ['First quarter','Half a moon, lit on the right.'];
+    if(p<.47) return ['Waxing gibbous','Nearly round. Only a bite missing on the left.'];
+    if(p<.53) return ['Full moon','The whole round, no bite at all.'];
+    if(p<.72) return ['Waning gibbous','Nearly round. A bite missing on the right.'];
+    if(p<.78) return ['Last quarter','Half a moon, lit on the left.'];
+    return ['Waning crescent','A thin curl on the left, shrinking away.'];
+  }
+  function moonPath(p){
+    var flip=p>.5, q=flip?1-p:p, r=25;
+    var k=Math.cos(2*Math.PI*q), rx=Math.abs(k)*r;
+    var path;
+    if(q<.01) path='M0 0';
+    else path='M0 -'+r+' A'+r+' '+r+' 0 0 1 0 '+r+' A'+rx.toFixed(2)+' '+r+' 0 0 '+(k>0?0:1)+' 0 -'+r+' Z';
+    return [path,flip];
+  }
+  function drawMoon(){
+    var p=moonAt(offset), mp=moonPath(p), inf=moonInfo(p);
+    var lit=d.getElementById('moonlit');
+    lit.setAttribute('d',mp[0]);
+    lit.setAttribute('transform',mp[1]?'scale(-1,1)':'');
+    var when=offset===0?'Tonight':offset===1?'Tomorrow night':'In '+offset+' nights';
+    d.getElementById('moonname').textContent=when+': '+inf[0];
+    d.getElementById('moonline').textContent=inf[1];
+    d.getElementById('moonsvg').setAttribute('aria-label',when+', '+inf[0]);
+    d.getElementById('moonnext').textContent=offset>=7?'Back to tonight':'Peek at the next night';
+  }
+  d.getElementById('moonnext').addEventListener('click',function(){offset=offset>=7?0:offset+1;drawMoon();});
+  drawMoon();
 
   var bird=d.getElementById('bird'),btn=d.getElementById('fluff'),note=d.getElementById('fluffnote');
   btn.addEventListener('click',function(){
